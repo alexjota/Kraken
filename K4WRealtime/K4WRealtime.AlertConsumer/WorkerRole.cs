@@ -36,6 +36,11 @@ namespace K4WRealtime.AlertListener
 
         public override bool OnStart()
         {
+            // configure alert hub
+            var hubUrl = CloudConfigurationManager.GetSetting("hubUrl");
+            var hubClient = new HubClient(hubUrl);
+
+            // configure alert queue
             var connectionString = CloudConfigurationManager.GetSetting("queueConnectionString");
             var path = CloudConfigurationManager.GetSetting("path");
 
