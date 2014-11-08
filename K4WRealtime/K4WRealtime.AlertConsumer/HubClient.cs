@@ -10,6 +10,7 @@ namespace K4WRealtime.AlertListener
     public class HubClient
     {
         private readonly string hubUrl;
+        private IHubProxy proxy;
 
         public HubClient(string hubUrl)
         {
@@ -19,9 +20,14 @@ namespace K4WRealtime.AlertListener
         public async Task StartAsync()
         {
             var connection = new HubConnection(this.hubUrl);
-            var proxy = connection.CreateHubProxy("AlertsHub");
-
+            this.proxy = connection.CreateHubProxy("AlertsHub");
+           
             await connection.Start();
+        }
+
+        public async Task SendUpdateAsync(string message)
+        {
+            await this.proxy.Invoke("SendUpdate", message);
         }
     }
 }
