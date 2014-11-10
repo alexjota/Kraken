@@ -19,6 +19,7 @@ namespace K4WRealtime.AlertListener
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent runCompleteEvent = new ManualResetEvent(false);
         private QueueManager queueManager;
+        private HubClient hubClient;
 
         public override void Run()
         {
@@ -36,6 +37,12 @@ namespace K4WRealtime.AlertListener
 
         public override bool OnStart()
         {
+            // configure alert hub
+            var hubUrl = CloudConfigurationManager.GetSetting("hubUrl");
+            this.hubClient = new HubClient(hubUrl);
+            this.hubClient.StartAsync().Wait();
+
+            // configure alert queue
             var connectionString = CloudConfigurationManager.GetSetting("queueConnectionString");
             var path = CloudConfigurationManager.GetSetting("path");
 
@@ -83,7 +90,8 @@ namespace K4WRealtime.AlertListener
 
         private async Task ProcessMessage(BrokeredMessage message)
         {
-            await Task.Run(() => Trace.WriteLine("PROXIMITY ALERT!"));
+            await this.hubClient.SendUpdateAsync("PROXIMITY ALERT!");
+            //await Task.Run(() => Trace.WriteLine("PROXIMITY ALERT!"));
         }
     }
 }

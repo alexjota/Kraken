@@ -7,6 +7,7 @@
     <ConfigurationSettings>
       <Setting name="queueConnectionString" />
       <Setting name="path" />
+      <Setting name="hubUrl" />
     </ConfigurationSettings>
   </WorkerRole>
   <WorkerRole name="K4WRealtime.EventsConsumer" vmsize="Small">

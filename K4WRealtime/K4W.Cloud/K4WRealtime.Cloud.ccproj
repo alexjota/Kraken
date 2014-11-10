@@ -37,8 +37,10 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="K4WRealtime.AlertConsumerContent\" />
     <Folder Include="K4WRealtime.AlertListenerContent\" />
     <Folder Include="K4WRealtime.ConsumerContent\" />
+    <Folder Include="K4WRealtime.EventsConsumerContent\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="K4WRealtime.AlertConsumerContent\diagnostics.wadcfg">
