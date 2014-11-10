@@ -52,12 +52,12 @@
                 }
 
                 //Call checkpoint every 1 minute1, so that worker can resume processing from the 1 minutes back if it restarts. 
-                if (this.checkpointStopWatch.Elapsed > TimeSpan.FromMinutes(1))
+                if (this.checkpointStopWatch.Elapsed > TimeSpan.FromSeconds(10))
                 {
                     await context.CheckpointAsync();
                     lock (this)
                     {
-                        this.checkpointStopWatch.Reset();
+                        this.checkpointStopWatch.Restart();
                     }
                 } 
             }

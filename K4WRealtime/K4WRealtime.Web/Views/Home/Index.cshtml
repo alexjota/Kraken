@@ -46,7 +46,7 @@
             
         // Start the connection.
         $.connection.hub.url = "http://localhost:7770/signalr";
-        $.connection.hub.start().done(function () { alert("ok"); }).fail(function (error) { alert("error"); });
+        $.connection.hub.start().fail(function (error) { alert("error"); });
     });
 </script>
 }
