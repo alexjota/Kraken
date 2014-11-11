@@ -4,8 +4,7 @@ Kraken
 Kinect Realtime Analysis with Azure Event Hubs.
 
 It uses the Depth-Basics sample from the Kinect SDK with a few tweaks to record events to Event Hubs.
-A consumer worker role processes the events, deciding whether to raise a proximity alert (<50 cm from the sensor).
-For the time being, a consumer worker role processes the alerts and displays the alert in the console.
+A consumer worker role processes the events, deciding whether to raise a proximity alert (<50 cm from the sensor) and send alerts to a Service Bus queue. Another worker will pick the alert messages and push them to the monitoring website using SignalR.
 
 Requirements
 
