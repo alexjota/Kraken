@@ -20,3 +20,7 @@ Before you get the sample running, you must configure the Cloud service and the 
 
 If you start debugging, the website and the Cloud service should fire up. It usually takes a bit, but I guess it depends on your environment. You can then execute the DepthRecorder project independently to start the Kinect depth sensor sample and record events.
 
+Read the following blog post for more context:
+http://blogs.southworks.net/ajezierski/2014/11/10/azure-event-hubs-the-thing-and-the-internet/
+
+
