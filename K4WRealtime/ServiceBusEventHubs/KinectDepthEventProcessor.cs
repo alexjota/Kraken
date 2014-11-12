@@ -16,13 +16,21 @@
         private PartitionContext partitionContext;
         private Stopwatch checkpointStopWatch;
         private HubClient hubClient;
+        private AlertsStore alertsStore;
 
         public KinectDepthEventProcessor()
         {
             // configure alert hub
             var hubUrl = CloudConfigurationManager.GetSetting("hubUrl");
             this.hubClient = new HubClient(hubUrl);
-            this.hubClient.StartAsync().Wait();
+              this.hubClient.StartAsync().Wait();
+
+            // Setup DocumentDb
+            var endpointUrl = CloudConfigurationManager.GetSetting("dbendpointurl");
+            var authKey = CloudConfigurationManager.GetSetting("dbauthkey");
+            var databaseId = CloudConfigurationManager.GetSetting("databaseid");
+
+            this.alertsStore = new AlertsStore(endpointUrl, authKey, databaseId);
         }
 
         public Task OpenAsync(PartitionContext context)
@@ -50,6 +58,8 @@
                         // send message directly to the website.
                         await this.hubClient.SendUpdateAsync("PROXIMITY ALERT!");
 
+                        // TODO: write alert to documentdb
+                        await this.alertsStore.Create(kinectEvent);
                     }
                 }
 

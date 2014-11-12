@@ -9,6 +9,9 @@
       <Setting name="storageConnectionString" />
       <Setting name="path" />
       <Setting name="hubUrl" />
+      <Setting name="dbendpointurl" />
+      <Setting name="dbauthkey" />
+      <Setting name="databaseid" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
