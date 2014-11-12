@@ -6,7 +6,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="serviceBusConnectionString" value="" />
       <Setting name="storageConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="path" value="ajeventhub" />
+      <Setting name="path" value="" />
       <Setting name="hubUrl" value="http://localhost:7770/signalr/hubs" />
     </ConfigurationSettings>
   </Role>
