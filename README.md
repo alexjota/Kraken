@@ -22,7 +22,7 @@ If you start debugging, the website and the Cloud service should fire up. It usu
 
 The single-worker branch
 
-An alternative approach. Alerts are pushed directly to the website. No worker and queue in the middle.
+An alternative approach. Alerts are pushed directly to the website from the KinectDepthEventProcessor. No worker and queue in the middle.
 
 Read the following blog post for more context:
 http://blogs.southworks.net/ajezierski/2014/11/10/azure-event-hubs-the-thing-and-the-internet/
