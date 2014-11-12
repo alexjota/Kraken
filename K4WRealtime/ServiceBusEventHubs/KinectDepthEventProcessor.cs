@@ -1,5 +1,6 @@
 ﻿namespace ServiceBusEventHubs
 {
+    using K4WRealtime.ServiceBusEventHubs;
     using Microsoft.ServiceBus.Messaging;
     using Microsoft.WindowsAzure;
     using Newtonsoft.Json;
@@ -14,14 +15,14 @@
     {
         private PartitionContext partitionContext;
         private Stopwatch checkpointStopWatch;
-        private QueueManager queueManager;
+        private HubClient hubClient;
 
         public KinectDepthEventProcessor()
         {
-            var queueConnectionString = CloudConfigurationManager.GetSetting("queueConnectionString");
-            var queueName = CloudConfigurationManager.GetSetting("queuePath");
-            this.queueManager = new QueueManager(queueName, queueConnectionString);
-            this.queueManager.Start();
+            // configure alert hub
+            var hubUrl = CloudConfigurationManager.GetSetting("hubUrl");
+            this.hubClient = new HubClient(hubUrl);
+            this.hubClient.StartAsync().Wait();
         }
 
         public Task OpenAsync(PartitionContext context)
@@ -46,8 +47,9 @@
 
                     if (kinectEvent.MinDepth > 0 && kinectEvent.MinDepth < 500)
                     {
-                        // flag alert send to servicebus queue
-                        await this.queueManager.SendMessageAsync(kinectEvent);
+                        // send message directly to the website.
+                        await this.hubClient.SendUpdateAsync("PROXIMITY ALERT!");
+
                     }
                 }
 

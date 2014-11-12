@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="KinectEvents" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
-  <Role name="K4WRealtime.AlertConsumer">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="queueConnectionString" value="" />
-      <Setting name="path" value="" />
-      <Setting name="hubUrl" value="http://localhost:7770/signalr/hubs" />
-    </ConfigurationSettings>
-  </Role>
   <Role name="K4WRealtime.EventsConsumer">
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="serviceBusConnectionString" value="" />
       <Setting name="storageConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="path" value="" />
-      <Setting name="queueConnectionString" value="" />
-      <Setting name="queuePath" value="" />
+      <Setting name="path" value="ajeventhub" />
+      <Setting name="hubUrl" value="http://localhost:7770/signalr/hubs" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

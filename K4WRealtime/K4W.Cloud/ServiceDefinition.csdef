@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="KinectEvents" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
-  <WorkerRole name="K4WRealtime.AlertConsumer" vmsize="Small">
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
-    <ConfigurationSettings>
-      <Setting name="queueConnectionString" />
-      <Setting name="path" />
-      <Setting name="hubUrl" />
-    </ConfigurationSettings>
-  </WorkerRole>
   <WorkerRole name="K4WRealtime.EventsConsumer" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />
@@ -18,8 +8,7 @@
       <Setting name="serviceBusConnectionString" />
       <Setting name="storageConnectionString" />
       <Setting name="path" />
-      <Setting name="queueConnectionString" />
-      <Setting name="queuePath" />
+      <Setting name="hubUrl" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

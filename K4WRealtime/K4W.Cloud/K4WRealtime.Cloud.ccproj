@@ -57,14 +57,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\K4WRealtime.AlertConsumer\K4WRealtime.AlertConsumer.csproj">
-      <Name>K4WRealtime.AlertConsumer</Name>
-      <Project>{1696adad-c258-4d50-ba41-b0d3d15ad89b}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>K4WRealtime.AlertConsumer</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
     <ProjectReference Include="..\K4WRealtime.EventsConsumer\K4WRealtime.EventsConsumer.csproj">
       <Name>K4WRealtime.EventsConsumer</Name>
       <Project>{d9163047-969c-4356-9482-0ccd59db4e93}</Project>
