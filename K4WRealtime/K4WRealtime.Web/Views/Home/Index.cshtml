@@ -3,13 +3,8 @@
 }
 
 <br />
-<div class="row">
-    <div id="status" class="col-lg-2" style="display:none">
-        <span class="alert alert-success">Kinect-01 online</span>
-    </div>
-    <div id="alert" class="col-lg-2" style="display:none">
-        <span class="alert alert-danger">PROXIMITY ALERT!</span>
-    </div>
+<div id="container">
+    
 </div>
 
 @section scripts{
@@ -29,7 +24,7 @@
 
         // Create a function that the hub can call to broadcast messages.
         alerts.client.alertReceived = function (event) {
-            var alert = $("#alert");
+            var alert = $("#alert-" + event.DeviceId);
             if (deferred && !deferred.state() == "resolved") {
                 deferred.reject();
             }
@@ -48,11 +43,22 @@
         };
 
         alerts.client.onlineNotificationReceived = function (deviceId) {
-            $("#status").fadeIn();
+            var html = "<div id='" + deviceId + "' class='row'>" +
+                            "<div id='status-" + deviceId + "' class='col-lg-2' style='display:none'>" +
+                                "<span class='alert alert-success'>Kinect-01 online</span>" +
+                            "</div>" +
+                            "<div id='alert-" + deviceId + "' class='col-lg-2' style='display:none'>" +
+                                "<span class='alert alert-danger'>PROXIMITY ALERT!</span>" +
+                            "</div>" +
+                        "</div>";
+
+            $("#container").append(html);
+            $("#status-"+deviceId).fadeIn();
         }
 
         alerts.client.offlineNotificationReceived = function (deviceId) {
-            $("#status").fadeOut();
+            $("#status-" + deviceId).fadeOut();
+            $("#" + deviceId).remove();
         }
             
         // Start the connection.
