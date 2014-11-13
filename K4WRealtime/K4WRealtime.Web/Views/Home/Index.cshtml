@@ -2,12 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<div id="alert" class="jumbotron alert-danger" style="display:none">
-    <h1>PROXIMITY ALERT!</h1>
-    <p class="lead">Security has been breached.</p>
+<br />
+<div class="row">
+    <div id="status" class="col-lg-2" style="display:none">
+        <span class="alert alert-success">Kinect-01 online</span>
+    </div>
+    <div id="alert" class="col-lg-2" style="display:none">
+        <span class="alert alert-danger">PROXIMITY ALERT!</span>
+    </div>
 </div>
-
-
 
 @section scripts{
 <!--Script references. -->
@@ -43,6 +46,14 @@
                 deferred.resolve();
             }, 2000)
         };
+
+        alerts.client.onlineNotificationReceived = function (deviceId) {
+            $("#status").fadeIn();
+        }
+
+        alerts.client.offlineNotificationReceived = function (deviceId) {
+            $("#status").fadeOut();
+        }
             
         // Start the connection.
         $.connection.hub.url = "http://localhost:7770/signalr";

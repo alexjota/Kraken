@@ -16,6 +16,7 @@ namespace Microsoft.Samples.Kinect.DepthBasics
     using System.Diagnostics;
     using ServiceBusEventHubs;
     using System.Linq;
+    using K4WRealtime.ServiceBusEventHubs;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,8 +24,9 @@ namespace Microsoft.Samples.Kinect.DepthBasics
     public partial class MainWindow : Window
     {
         private EventHubsManager eventHubsManager;
+        private HubClient hubClient;
 
-        private Guid deviceId;
+        private string deviceId;
 
         /// <summary>
         /// Active Kinect sensor
@@ -52,7 +54,7 @@ namespace Microsoft.Samples.Kinect.DepthBasics
         public MainWindow()
         {
             InitializeComponent();
-            this.deviceId = Guid.NewGuid();
+            this.deviceId = "Kinect-01";
         }
 
         /// <summary>
@@ -60,12 +62,17 @@ namespace Microsoft.Samples.Kinect.DepthBasics
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
-        private void WindowLoaded(object sender, RoutedEventArgs e)
+        private async void WindowLoaded(object sender, RoutedEventArgs e)
         {
-            //Setup Event Hub
+            // Setup Event Hub
             var connectionstring = "";
             var path = "";
             this.eventHubsManager = new EventHubsManager(connectionstring, path);
+
+            // Setup SignalR hub
+            var hubUrl = "http://localhost:7770/signalr/hubs";
+            this.hubClient = new HubClient(hubUrl);
+            await this.hubClient.StartAsync();
 
             // Look through all sensors and start the first connected one.
             // This requires that a Kinect is connected at the time of app startup.
@@ -115,6 +122,9 @@ namespace Microsoft.Samples.Kinect.DepthBasics
             {
                 this.statusBarText.Text = Properties.Resources.NoKinectReady;
             }
+
+            // notify device online
+            await this.hubClient.SendOnlineNotification(this.deviceId);
         }
 
         /// <summary>
@@ -122,12 +132,14 @@ namespace Microsoft.Samples.Kinect.DepthBasics
         /// </summary>
         /// <param name="sender">object sending the event</param>
         /// <param name="e">event arguments</param>
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private async void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (null != this.sensor)
             {
                 this.sensor.Stop();
             }
+
+            await this.hubClient.SendOfflineNotification(this.deviceId);
         }
 
         /// <summary>
@@ -141,7 +153,6 @@ namespace Microsoft.Samples.Kinect.DepthBasics
             {
                 if (depthFrame != null)
                 {
-                    
                     // Copy the pixel data from the image to a temporary array
                     depthFrame.CopyDepthImagePixelDataTo(this.depthPixels);
 
@@ -150,8 +161,6 @@ namespace Microsoft.Samples.Kinect.DepthBasics
                     int maxDepth = depthFrame.MaxDepth;
 
                     // Convert the depth to RGB
-
-
                     int colorPixelIndex = 0;
                     for (int i = 0; i < this.depthPixels.Length; ++i)
                     {
@@ -190,7 +199,7 @@ namespace Microsoft.Samples.Kinect.DepthBasics
                         this.colorBitmap.PixelWidth * sizeof(int),
                         0);
 
-                    // TODO: dump frame to EventHub
+                    // dump closest pixel to EventHub
                     var minimumFrameDepth = depthPixels.Where(p => p.IsKnownDepth).Min(p => p.Depth);
                     var depthData = new KinectEvent
                     {

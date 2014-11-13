@@ -30,5 +30,15 @@ namespace K4WRealtime.ServiceBusEventHubs
         {
             await this.proxy.Invoke("SendUpdate", kinectEvent);
         }
+
+        public async Task SendOnlineNotification(string deviceId)
+        {
+            await this.proxy.Invoke("SendOnlineNotification", deviceId);
+        }
+
+        public async Task SendOfflineNotification(string deviceId)
+        {
+            await this.proxy.Invoke("SendOfflineNotification", deviceId);
+        }
     }
 }

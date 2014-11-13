@@ -11,7 +11,7 @@ namespace ServiceBusEventHubs
     public class KinectEvent
     {
         [DataMember]
-        public Guid DeviceId { get; set; }
+        public string DeviceId { get; set; }
 
         [DataMember]
         public int FrameNumber { get; set; }

@@ -15,5 +15,15 @@ namespace K4WRealtime.Web.Hubs
         {
             Clients.All.alertReceived(kinectEvent);
         }
+
+        public void SendOnlineNotification(string deviceId)
+        {
+            Clients.All.onlineNotificationReceived(deviceId);
+        }
+
+        public void SendOfflineNotification(string deviceId)
+        {
+            Clients.All.offlineNotificationReceived(deviceId);
+        }
     }
 }
