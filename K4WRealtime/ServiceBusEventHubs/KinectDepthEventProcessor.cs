@@ -43,13 +43,10 @@
                 {
                     var kinectEvent = JsonConvert.DeserializeObject<KinectEvent>(Encoding.UTF8.GetString(message.GetBytes()));
 
-                    //Trace.WriteLine(string.Format("Message received.  Partition: '{0}', Device: '{1}', MinDepth: '{2}'", this.partitionContext.Lease.PartitionId, kinectEvent.DeviceId, kinectEvent.MinDepth)); 
-
                     if (kinectEvent.MinDepth > 0 && kinectEvent.MinDepth < 500)
                     {
                         // send message directly to the website.
-                        await this.hubClient.SendUpdateAsync("PROXIMITY ALERT!");
-
+                        await this.hubClient.SendUpdateAsync(kinectEvent);
                     }
                 }
 

@@ -188,6 +188,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ServiceBusEventHubs\K4WRealtime.ServiceBusEventHubs.csproj">
+      <Project>{0d4eab87-9d69-4bf3-a482-921da558c5d6}</Project>
+      <Name>K4WRealtime.ServiceBusEventHubs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

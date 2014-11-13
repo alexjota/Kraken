@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
+using ServiceBusEventHubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace K4WRealtime.ServiceBusEventHubs
             await connection.Start();
         }
 
-        public async Task SendUpdateAsync(string message)
+        public async Task SendUpdateAsync(KinectEvent kinectEvent)
         {
-            await this.proxy.Invoke("SendUpdate", message);
+            await this.proxy.Invoke("SendUpdate", kinectEvent);
         }
     }
 }

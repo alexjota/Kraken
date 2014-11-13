@@ -25,7 +25,7 @@
         var alerts = $.connection.alertsHub;
 
         // Create a function that the hub can call to broadcast messages.
-        alerts.client.alertReceived = function (message) {
+        alerts.client.alertReceived = function (event) {
             var alert = $("#alert");
             if (deferred && !deferred.state() == "resolved") {
                 deferred.reject();
